@@ -17,6 +17,7 @@ PY = sys.executable
 WIN0, WIN_LEN, WIN_GAP = 0.3, 3.4, 3.7          # effect windows on the source clip: start, length, spacing
 
 CARD_FX = ('orbit',)
+ALIASES = {'orbital': 'orbit'}
 
 
 def run(cmd, **kw):
@@ -48,6 +49,7 @@ def main():
     wd = os.path.abspath(a.workdir or base + '_reel_work'); os.makedirs(wd, exist_ok=True)
     out = os.path.abspath(a.out or base + '_claude_reel.mp4')
     engine_py = os.path.join(KIT, 'fx_engine.py')
+    for e in fx: e['fx'] = ALIASES.get(str(e['fx']).strip().lower(), str(e['fx']).strip().lower())
     bad = [e['fx'] for e in fx if e['fx'] not in EFFECTS]
     if bad: sys.exit(f"Unknown effect(s): {', '.join(bad)}. See: python fx_engine.py --list")
     if not os.path.exists(os.path.join(FONTS, 'Inter.ttf')): sys.exit('Fonts missing. Run setup.sh first.')

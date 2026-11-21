@@ -16,7 +16,7 @@ Claude does the rest: it installs what it needs, shows you preview pictures, the
 A vertical 1080×1920 video (`yourclip_claude_reel.mp4`) with:
 - Claude chat screens: typing `/effects orbit`, the menu, "Editing with orbit…"
 - a preview card that zooms into the full-screen edit
-- 1 to 11 face-tracked effects of your choice (see the list below)
+- 1 to 11 effects of your choice, out of 18 (most follow your face) (see the list below)
 - an end card ("Comment 'claude'") showing every edit as a tile
 - a beat with typing and whoosh sounds, timed to every reveal (your voice is muted)
 

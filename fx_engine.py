@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, glob, json, math, os, random, shutil, subprocess, sys, urllib.request
+import argparse, glob, hashlib, json, math, os, random, shutil, subprocess, sys, urllib.request
 import numpy as np, cv2
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
@@ -15,23 +15,32 @@ KIT = os.path.dirname(os.path.abspath(__file__))
 FONTS = os.environ.get('FX_FONTS', os.path.join(KIT, 'fonts'))
 MODELS = os.environ.get('FX_MODELS', os.path.join(KIT, 'models'))
 ASSETS = {
-    os.path.join(FONTS, 'Inter.ttf'): 'https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz,wght%5D.ttf',
-    os.path.join(FONTS, 'SpaceMono-Bold.ttf'): 'https://raw.githubusercontent.com/google/fonts/main/ofl/spacemono/SpaceMono-Bold.ttf',
-    os.path.join(FONTS, 'PlayfairDisplay.ttf'): 'https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf',
-    os.path.join(MODELS, 'face.tflite'): 'https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/latest/blaze_face_short_range.tflite',
-    os.path.join(MODELS, 'person.tflite'): 'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_segmenter/float16/latest/selfie_segmenter.tflite',
+    os.path.join(FONTS, 'Inter.ttf'): ('https://raw.githubusercontent.com/google/fonts/06bfe0d62a98375cb09c942fa18e68bd32cff057/ofl/inter/Inter%5Bopsz,wght%5D.ttf', '29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031'),
+    os.path.join(FONTS, 'SpaceMono-Bold.ttf'): ('https://raw.githubusercontent.com/google/fonts/06bfe0d62a98375cb09c942fa18e68bd32cff057/ofl/spacemono/SpaceMono-Bold.ttf', '405e73d41afb7e5906efce206a326af5c956f38e255f35421c260e861e599c59'),
+    os.path.join(FONTS, 'PlayfairDisplay.ttf'): ('https://raw.githubusercontent.com/google/fonts/06bfe0d62a98375cb09c942fa18e68bd32cff057/ofl/playfairdisplay/PlayfairDisplay%5Bwght%5D.ttf', 'c40f2293766a503bc70cce9e512ef844a4ccb7cbcde792fe2ea31d191917d8d6'),
+    os.path.join(MODELS, 'face.tflite'): ('https://storage.googleapis.com/mediapipe-models/face_detector/blaze_face_short_range/float16/1/blaze_face_short_range.tflite', 'b4578f35940bf5a1a655214a1cce5cab13eba73c1297cd78e1a04c2380b0152f'),
+    os.path.join(MODELS, 'person.tflite'): ('https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_segmenter/float16/1/selfie_segmenter.tflite', '191ac9529ae506ee0beefa6b2c945a172dab9d07d1e802a290a4e4038226658b'),
 }
 
 ORANGE, RED, CREAM, INK = (217, 119, 87), (226, 38, 44), (246, 240, 229), (24, 23, 21)
 
 
+def sha256(path):
+    h = hashlib.sha256()
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(1 << 20), b''): h.update(chunk)
+    return h.hexdigest()
+
+
 def fetch():
-    for path, url in ASSETS.items():
-        if os.path.exists(path) and os.path.getsize(path) > 1000: continue
+    for path, (url, digest) in ASSETS.items():
+        if os.path.exists(path) and sha256(path) == digest: continue
         os.makedirs(os.path.dirname(path), exist_ok=True)
         print('downloading', os.path.basename(path), flush=True)
         req = urllib.request.Request(url, headers={'User-Agent': 'fx-engine'})
         with urllib.request.urlopen(req, timeout=120) as r, open(path + '.part', 'wb') as f: shutil.copyfileobj(r, f)
+        if sha256(path + '.part') != digest:
+            os.remove(path + '.part'); sys.exit(f'Checksum mismatch for {os.path.basename(path)}; download failed or file changed.')
         os.replace(path + '.part', path)
     print('ASSETS_READY')
 

@@ -1,5 +1,5 @@
-numpy
-opencv-python
-pillow
-scipy
-mediapipe
+numpy~=2.5
+opencv-python~=5.1.0
+pillow~=13.0
+scipy~=1.18
+mediapipe~=1.2.3

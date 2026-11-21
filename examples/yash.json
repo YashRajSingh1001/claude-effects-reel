@@ -8,7 +8,7 @@
   "effects": [
     {"fx": "glass-widgets", "text": "7", "sub": "edits|one clip", "name": "Yash Raj", "handle": "@yashraj.decodes",
      "top": "1.8K", "bars": "1800|1700|1400|1200|1000|315", "day": "SAT", "date": "21", "event": "Post the reel · tonight",
-     "song": "decoding AI", "guard": "0"},
+     "guard": "0"},
     {"fx": "documentary", "name": "YASH RAJ", "handle": "@yashraj.decodes", "text": "ONE CLIP.|7 EDITS.", "hl": "CLIP",
      "tag": "A DATA SCIENTIST DECODES AI  ·  DAILY", "wall": "DECODED", "guard": "0"},
     {"fx": "orbit", "count": 6},
