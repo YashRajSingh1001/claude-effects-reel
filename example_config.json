@@ -11,7 +11,7 @@
     {"fx": "documentary", "name": "YOUR NAME", "handle": "@yourhandle", "text": "ONE CLIP.|7 EDITS.", "hl": "CLIP",
      "tag": "A DAILY SERIES", "wall": "EDITED", "guard": "0"},
     {"fx": "orbit", "count": 6},
-    {"fx": "kallaway-split", "title": "My top 5 reels", "labels": "Reel 1|Reel 2|Reel 3|Reel 4|Reel 5", "vals": "1200|950|800|600|400"},
+    {"fx": "chart-split", "title": "My top 5 reels", "labels": "Reel 1|Reel 2|Reel 3|Reel 4|Reel 5", "vals": "1200|950|800|600|400"},
     {"fx": "spotlight", "text": "EDITED"},
     {"fx": "checklist", "look": "dark", "guard": "0"},
     {"fx": "timeline", "text": "AUTO-EDIT", "sub": "edited with Claude", "guard": "0"}

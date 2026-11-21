@@ -48,11 +48,12 @@ def ease_out(x): x = clamp(x); return 1 - (1 - x) ** 3
 # ---------- plan ----------
 WD = sys.argv[2] if len(sys.argv) > 2 and sys.argv[1] == 'preview' else (sys.argv[1] if len(sys.argv) > 1 else '.')
 J = lambda n: os.path.join(WD, n)
-CFG = json.load(open(J('config.json'))) if os.path.exists(J('config.json')) else {}
-plan = json.load(open(J('plan.json')))['effects'] if os.path.exists(J('plan.json')) else []
+CFG = json.load(open(J('config.json'), encoding='utf-8')) if os.path.exists(J('config.json')) else {}
+plan = json.load(open(J('plan.json'), encoding='utf-8'))['effects'] if os.path.exists(J('plan.json')) else []
 NAME = CFG.get('name', 'there'); HANDLE = CFG.get('handle', ''); NFX = len(plan)
 DESC = {e['fx']: e.get('desc', '') for e in plan}
-MENU_SUB = CFG.get('menu_sub', '51 video effects for your clips')
+FX_TOTAL = int(CFG.get('fx_total', NFX))
+MENU_SUB = CFG.get('menu_sub', f'{FX_TOTAL} video effects for your clips')
 GREETING = CFG.get('greeting', f'Evening, {NAME}')
 COMMENT_WORD = CFG.get('comment_word', 'claude')
 REPLY = CFG.get('reply', f'Comment \u201c{COMMENT_WORD}\u201d and I\u2019ll send you all {NFX} effects')
@@ -60,7 +61,7 @@ END_TITLE = CFG.get('end_title', f'Comment \u201c{COMMENT_WORD}\u201d')
 END_PILL = CFG.get('end_pill', f'for all {NFX} Claude effects')
 END_LINE1 = CFG.get('end_line1', f'One clip. {NFX} edits. Zero editing apps.')
 END_LINE2 = CFG.get('end_line2', 'All typed in Claude.')
-MORE = CFG.get('more_tile', '+44|more effects|in the repo')
+MORE = CFG.get('more_tile', f'+{max(0, FX_TOTAL - NFX)}|more effects|in the repo')
 BEAT = 0.50625
 T_TYPE, T_CARD, T_FULL = 2 * BEAT, 2 * BEAT, 4 * BEAT
 CYCLE = T_TYPE + T_CARD + T_FULL

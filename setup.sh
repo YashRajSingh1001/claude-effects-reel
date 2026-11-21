@@ -1,15 +1,11 @@
 #!/usr/bin/env bash
-# One-time setup (about 2 minutes). Safe to re-run: prints KIT_READY when everything is in place.
-# usage: bash setup.sh [engine_dir]   (default ~/claude-video-effects)
 set -e
 KIT="$(cd "$(dirname "$0")" && pwd)"
-ENGINE="${1:-$HOME/claude-video-effects}"
-PIN=60840acc7e126a5e34068276a23e912ec4c8c34c   # upstream version this kit was tested against
-if [ ! -d "$ENGINE/.git" ]; then
-  git clone -q https://github.com/Vibha-Ramprakash/claude-video-effects "$ENGINE"
-  git -C "$ENGINE" -c advice.detachedHead=false checkout -q "$PIN"
-fi
-bash "$ENGINE/scripts/setup.sh"
-cp "$KIT/fx_engine.py" "$ENGINE/scripts/fx_engine.py"
-"$ENGINE/.venv/bin/python" -c "import scipy" 2>/dev/null || "$ENGINE/.venv/bin/python" -m pip install -q scipy
-echo "KIT_READY  python: $ENGINE/.venv/bin/python"
+command -v ffmpeg >/dev/null || { echo "Install ffmpeg first (Mac: brew install ffmpeg, Linux: sudo apt install ffmpeg)"; exit 1; }
+PYTHON="${PYTHON:-python3}"
+[ -d "$KIT/.venv" ] || "$PYTHON" -m venv "$KIT/.venv"
+PY="$KIT/.venv/bin/python"; [ -x "$PY" ] || PY="$KIT/.venv/Scripts/python.exe"
+"$PY" -m pip install -q --upgrade pip
+"$PY" -m pip install -q -r "$KIT/requirements.txt"
+"$PY" "$KIT/fx_engine.py" --fetch
+echo "KIT_READY  python: $PY"

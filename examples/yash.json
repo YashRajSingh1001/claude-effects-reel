@@ -12,7 +12,7 @@
     {"fx": "documentary", "name": "YASH RAJ", "handle": "@yashraj.decodes", "text": "ONE CLIP.|7 EDITS.", "hl": "CLIP",
      "tag": "A DATA SCIENTIST DECODES AI  ·  DAILY", "wall": "DECODED", "guard": "0"},
     {"fx": "orbit", "count": 6},
-    {"fx": "kallaway-split", "title": "My top 6 reels", "labels": "Capitalism|Election|Nvidia|1979|AI room|Berkeley",
+    {"fx": "chart-split", "title": "My top 6 reels", "labels": "Capitalism|Election|Nvidia|1979|AI room|Berkeley",
      "vals": "1800|1700|1400|1200|1000|315"},
     {"fx": "spotlight", "text": "DECODED"},
     {"fx": "checklist", "look": "dark", "guard": "0",
