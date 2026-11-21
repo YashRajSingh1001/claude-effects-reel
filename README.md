@@ -1,34 +1,52 @@
 # claude-effects-reel
 
-Turns one talking-head clip into a "Claude types `/effects X` → the edit reveals" reel:
-Claude chat screens with typing and the slash menu, a dot-reveal preview card, a zoom to the full-screen edit,
-an end card ("Comment 'claude'"), and a synthesized beat + UI sound design (voice muted).
+Turn one talking-head clip into a **"Claude types `/effects X` → the edit reveals"** reel:
 
-## Setup (once per machine, ~2 min)
+- Claude chat screens: typing, the slash menu, "Editing with X…"
+- a dot-reveal preview card that zooms into the full-screen edit
+- 50+ face-tracked effects (orbit, spotlight, glass widgets, checklist, timeline, LED sign, bar-chart split…)
+- an end card ("Comment 'claude'") with every edit as a tile
+- a beat + UI sound design (voice muted), with every reveal landing on a downbeat
+
+Made by [@yashraj.decodes](https://instagram.com/yashraj.decodes). Built on the free
+[claude-video-effects](https://github.com/Vibha-Ramprakash/claude-video-effects) engine by @vibha.in.progress (MIT) — see `NOTICE.md`.
+
+## Easiest way: let Claude do it
+Open **Claude Code** (or any Claude that can run code), attach your clip and paste:
+
+> Clone https://github.com/YashRajSingh1001/claude-effects-reel, follow its SKILL.md and make me a reel from this clip.
+> Effects: glass-widgets, orbit, spotlight, checklist. My name is ___, my handle is ___.
+
+**As a Claude Code skill** (then just type "make an effects reel from this clip"):
 ```bash
-bash setup.sh            # clones the effects engine to ~/claude-video-effects and installs everything
+git clone https://github.com/YashRajSingh1001/claude-effects-reel ~/.claude/skills/effects-reel
 ```
 
-## Make a reel
-1. Copy `example_config.json` to `reel.json` and edit it: your name/handle, the effects (1–11, in order) and their text/numbers.
-   Any effect from the engine works (`~/claude-video-effects/.venv/bin/python ~/claude-video-effects/scripts/fx_engine.py --list`).
-2. Optional: put reel screenshots in a folder and set `reels_folder` (used by orbit, phone-fan, noise...).
-3. Check frames (fast), then render:
+## Run it yourself
+Needs git, ffmpeg and Python 3.10+ (Mac or Linux; on Windows use WSL).
 ```bash
+bash setup.sh                                  # once, ~2 min
+cp example_config.json reel.json               # edit: name, handle, effects (1–11) and their text/numbers
 PY=~/claude-video-effects/.venv/bin/python
-$PY make_reel.py myclip.mp4 --config reel.json --check   # stills in myclip_reel_work/
+$PY make_reel.py myclip.mp4 --config reel.json --check   # quick stills in myclip_reel_work/
 $PY make_reel.py myclip.mp4 --config reel.json           # -> myclip_claude_reel.mp4
 ```
-The clip needs about 3.7 s per effect (7 effects ≈ 26 s). Each edit gets 2 s of typing, 1 s of card, 2 s full screen.
+The clip needs about 3.7 s per effect (7 effects ≈ 27 s). Each edit gets ~2 s of typing, 1 s of card, 2 s full screen.
 
 ## Config keys
 | key | default | what it does |
 |---|---|---|
-| `name` | Yash | used in "Evening, <name>" |
-| `handle` | @yashraj.decodes | end card |
+| `name` | there | "Evening, <name>" on the outro |
+| `handle` | – | shown on the end card |
 | `clip_start` | 0 | where to start in your clip (seconds) |
-| `reels_folder` / `crop_instagram` | – / true | screenshots for card effects; crops Instagram UI from phone screenshots |
+| `reels_folder` / `crop_instagram` | – / true | screenshots for card effects (orbit, phone-fan…); crops Instagram UI from phone screenshots |
 | `comment_word` | claude | the word typed on the outro and used in the CTA |
-| `reply`, `end_title`, `end_pill`, `end_line1`, `end_line2`, `more_tile` | auto | outro text overrides (`more_tile` = `big|line|line`) |
+| `reply`, `end_title`, `end_pill`, `end_line1`, `end_line2`, `more_tile` | auto | outro text (`more_tile` = `big|line|line`) |
+| `effects[].fx` + options | – | any engine effect; options per effect are in the engine's SKILL.md |
 | `effects[].desc` | built-in | the one-liner under the name in the slash menu |
-| `effects[].guard` | "1" | "0" lets the panel sit in front of hands/mic (use for checklist, timeline, widgets) |
+| `effects[].guard` | "1" | "0" lets the panel sit in front of hands/mic |
+
+Effects only in this kit: `documentary` (`text`, `hl`, `name`, `handle`, `tag`, `wall`) and
+`kallaway-split` (`title`, `labels`, `vals`); plus `look: "dark"` for `checklist` and `top`/`bars` for `glass-widgets`.
+
+These are starter edits: watch before you post, and add captions/trending audio in CapCut or Instagram.

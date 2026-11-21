@@ -50,7 +50,7 @@ WD = sys.argv[2] if len(sys.argv) > 2 and sys.argv[1] == 'preview' else (sys.arg
 J = lambda n: os.path.join(WD, n)
 CFG = json.load(open(J('config.json'))) if os.path.exists(J('config.json')) else {}
 plan = json.load(open(J('plan.json')))['effects'] if os.path.exists(J('plan.json')) else []
-NAME = CFG.get('name', 'Yash'); HANDLE = CFG.get('handle', '@yashraj.decodes'); NFX = len(plan)
+NAME = CFG.get('name', 'there'); HANDLE = CFG.get('handle', ''); NFX = len(plan)
 DESC = {e['fx']: e.get('desc', '') for e in plan}
 MENU_SUB = CFG.get('menu_sub', '51 video effects for your clips')
 GREETING = CFG.get('greeting', f'Evening, {NAME}')

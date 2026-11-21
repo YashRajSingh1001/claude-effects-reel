@@ -1,0 +1,22 @@
+{
+  "name": "Yash",
+  "handle": "@yashraj.decodes",
+  "clip_start": 0,
+  "reels_folder": "reels",
+  "crop_instagram": true,
+  "comment_word": "claude",
+  "effects": [
+    {"fx": "glass-widgets", "text": "7", "sub": "edits|one clip", "name": "Yash Raj", "handle": "@yashraj.decodes",
+     "top": "1.8K", "bars": "1800|1700|1400|1200|1000|315", "day": "SAT", "date": "21", "event": "Post the reel · tonight",
+     "song": "decoding AI", "guard": "0"},
+    {"fx": "documentary", "name": "YASH RAJ", "handle": "@yashraj.decodes", "text": "ONE CLIP.|7 EDITS.", "hl": "CLIP",
+     "tag": "A DATA SCIENTIST DECODES AI  ·  DAILY", "wall": "DECODED", "guard": "0"},
+    {"fx": "orbit", "count": 6},
+    {"fx": "kallaway-split", "title": "My top 6 reels", "labels": "Capitalism|Election|Nvidia|1979|AI room|Berkeley",
+     "vals": "1800|1700|1400|1200|1000|315"},
+    {"fx": "spotlight", "text": "DECODED"},
+    {"fx": "checklist", "look": "dark", "guard": "0",
+     "text": "Found your face::every frame|Cut you out of the room::AI mask|Put the text behind you::depth|Pulled your real views::1.8K top|Rendered for Reels::1080p"},
+    {"fx": "timeline", "text": "AUTO-EDIT", "sub": "@yashraj.decodes x Claude", "guard": "0"}
+  ]
+}
