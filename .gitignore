@@ -1,0 +1,4 @@
+*_reel_work/
+*.mp4
+*.mov
+__pycache__/
